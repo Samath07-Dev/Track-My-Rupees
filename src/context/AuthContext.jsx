@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
       // First, check if the backend is even responding
       let backendHealthy = false;
       try {
-        const healthRes = await axios.get('http://localhost:5001/api/health', {
+        const healthRes = await axios.get('https://track-my-rupees-backend.onrender.com/api/health', {
           timeout: 3000
         });
         backendHealthy = healthRes.data.mongodb === 'connected';
@@ -70,19 +70,13 @@ export const AuthProvider = ({ children }) => {
         if (!backendHealthy) {
           const dbStatus = healthRes.data.mongodb;
           if (dbStatus === 'disconnected') {
-            setError('Backend database is not connected. Please restart the backend server.');
+            setError('Backend database is not connected. Please try again later.');
             console.error('Database disconnected');
             return false;
           }
         }
       } catch (healthErr) {
-        if (healthErr.code === 'ECONNREFUSED') {
-          setError('Backend server is not running. Run "./start-app.sh" to start it.');
-        } else if (healthErr.code === 'ECONNABORTED' || healthErr.message.includes('timeout')) {
-          setError('Backend server is not responding. Please check if it\'s running.');
-        } else {
-          setError('Cannot connect to backend server. Make sure it\'s running on port 5001.');
-        }
+        setError('Backend server is not responding. Please try again later.');
         console.error('Backend health check failed:', healthErr.message);
         return false;
       }
@@ -101,13 +95,13 @@ export const AuthProvider = ({ children }) => {
       let message = 'Login failed';
       
       if (err.response?.status === 503) {
-        message = 'Database service is unavailable. Please ensure MongoDB is running and the backend is restarted.';
+        message = 'Backend service is temporarily unavailable. Please try again later.';
       } else if (err.response?.data?.message) {
         message = err.response.data.message;
       } else if (err.code === 'ECONNABORTED' || err.message.includes('timeout')) {
         message = 'Request timeout - backend server is not responding.';
       } else if (err.code === 'ECONNREFUSED') {
-        message = 'Cannot connect to backend. Please run "./start-app.sh"';
+        message = 'Cannot connect to backend. Please check your internet connection.';
       }
       
       setError(message);
@@ -123,7 +117,7 @@ export const AuthProvider = ({ children }) => {
       // First, check if the backend is even responding
       let backendHealthy = false;
       try {
-        const healthRes = await axios.get('http://localhost:5001/api/health', {
+        const healthRes = await axios.get('https://track-my-rupees-backend.onrender.com/api/health', {
           timeout: 3000
         });
         backendHealthy = healthRes.data.mongodb === 'connected';
@@ -131,18 +125,12 @@ export const AuthProvider = ({ children }) => {
         if (!backendHealthy) {
           const dbStatus = healthRes.data.mongodb;
           if (dbStatus === 'disconnected') {
-            setError('Backend database is not connected. Please restart the backend server.');
+            setError('Backend database is not connected. Please try again later.');
             return false;
           }
         }
       } catch (healthErr) {
-        if (healthErr.code === 'ECONNREFUSED') {
-          setError('Backend server is not running. Run "./start-app.sh" to start it.');
-        } else if (healthErr.code === 'ECONNABORTED' || healthErr.message.includes('timeout')) {
-          setError('Backend server is not responding. Please check if it\'s running.');
-        } else {
-          setError('Cannot connect to backend server. Make sure it\'s running on port 5001.');
-        }
+        setError('Backend server is not responding. Please try again later.');
         return false;
       }
 
@@ -159,13 +147,13 @@ export const AuthProvider = ({ children }) => {
       let message = 'Registration failed';
       
       if (err.response?.status === 503) {
-        message = 'Database service is unavailable. Please ensure MongoDB is running and the backend is restarted.';
+        message = 'Backend service is temporarily unavailable. Please try again later.';
       } else if (err.response?.data?.message) {
         message = err.response.data.message;
       } else if (err.code === 'ECONNABORTED' || err.message.includes('timeout')) {
         message = 'Request timeout - backend server is not responding.';
       } else if (err.code === 'ECONNREFUSED') {
-        message = 'Cannot connect to backend. Please run "./start-app.sh"';
+        message = 'Cannot connect to backend. Please check your internet connection.';
       }
       
       setError(message);
