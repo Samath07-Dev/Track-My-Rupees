@@ -136,7 +136,7 @@ MAX_ATTEMPTS=15
 ATTEMPT=0
 
 while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
-    if curl -s http://localhost:5001/api/health >/dev/null 2>&1; then
+    if curl -s https://track-my-rupees-backend.onrender.com/api/health >/dev/null 2>&1; then
         print_success "Backend is ready and responding"
         break
     fi

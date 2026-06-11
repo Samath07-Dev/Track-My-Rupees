@@ -136,7 +136,7 @@ async function startBackendServer() {
     // Check backend health
     const healthCheckInterval = setInterval(async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/health', { timeout: 2000 });
+        const response = await axios.get('https://track-my-rupees-backend.onrender.com/api/health', { timeout: 2000 });
         
         if (response.data.status === 'ok') {
           if (response.data.mongodb === 'connected') {

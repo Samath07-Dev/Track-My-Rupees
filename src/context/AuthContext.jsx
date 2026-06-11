@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
         if (token && storedUser) {
           // Verify token is still valid
           try {
-            const res = await axios.post('http://localhost:5001/api/auth/verify', {}, {
+            const res = await axios.post('https://track-my-rupees-backend.onrender.com/api/auth/verify', {}, {
               headers: { Authorization: `Bearer ${token}` },
               timeout: 5000 // 5 second timeout
             });
@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       // If backend is healthy, attempt login
-      const res = await axios.post('http://localhost:5001/api/auth/login', { email, password }, {
+      const res = await axios.post('https://track-my-rupees-backend.onrender.com/api/auth/login', { email, password }, {
         timeout: 10000
       });
       
@@ -146,7 +146,7 @@ export const AuthProvider = ({ children }) => {
         return false;
       }
 
-      const res = await axios.post('http://localhost:5001/api/auth/register', { name, email, password }, {
+      const res = await axios.post('https://track-my-rupees-backend.onrender.com/api/auth/register', { name, email, password }, {
         timeout: 10000
       });
       

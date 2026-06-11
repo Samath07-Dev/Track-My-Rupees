@@ -35,7 +35,7 @@ function AppContent() {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5001/api/transactions', {
+      const res = await axios.get('https://track-my-rupees-backend.onrender.com/api/transactions', {
         headers: { Authorization: `Bearer ${token}` },
         timeout: 10000
       });
@@ -72,7 +72,7 @@ function AppContent() {
   const addTransaction = async (newTx) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.post('http://localhost:5001/api/transactions', newTx, {
+      const res = await axios.post('https://track-my-rupees-backend.onrender.com/api/transactions', newTx, {
         headers: { Authorization: `Bearer ${token}` },
         timeout: 10000
       });
@@ -89,7 +89,7 @@ function AppContent() {
   const deleteTransaction = async (txId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5001/api/transactions/${txId}`, {
+      await axios.delete(`https://track-my-rupees-backend.onrender.com/api/transactions/${txId}`, {
         headers: { Authorization: `Bearer ${token}` },
         timeout: 10000
       });
@@ -105,7 +105,7 @@ function AppContent() {
   const updateTransaction = async (txId, updatedData) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.put(`http://localhost:5001/api/transactions/${txId}`, updatedData, {
+      const res = await axios.put(`https://track-my-rupees-backend.onrender.com/api/transactions/${txId}`, updatedData, {
         headers: { Authorization: `Bearer ${token}` },
         timeout: 10000
       });
